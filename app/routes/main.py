@@ -13,14 +13,13 @@ def welcome():
 @main_routes.route('/login', methods=['POST'])
 def login():
     username = request.json.get('username', None)
-    email = request.json.get('email', None)
     password = request.json.get('email', None)
     print(str(username))
     
     if username != "test" or password != "test":
         return jsonify({"msg": "Bad username or password"}), 401
 
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token)
 
 

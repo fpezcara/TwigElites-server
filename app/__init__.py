@@ -3,7 +3,7 @@ from os import environ
 from flask import Flask, render_template, request
 from flask_cors import CORS
 
-# from .database.db import db
+from .database.db import db
 from .routes.main import main_routes
 # from .routes.auth import auth_routes
 
@@ -27,8 +27,8 @@ app.config.update(
 )
 
 CORS(app)
-# db.app = app
-# db.init_app(app)
+db.app = app
+db.init_app(app)
 
 app.register_blueprint(main_routes)
 # app.register_blueprint(auth_routes, url_prefix='/auth')

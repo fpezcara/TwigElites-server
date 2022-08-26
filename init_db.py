@@ -1,4 +1,4 @@
-from app.database import db
+from app import db
 # from app.models.listing import Listing
 
 # Clear it all out

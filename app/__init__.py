@@ -17,7 +17,7 @@ load_dotenv()
 
 database_uri = environ.get('DATABASE_URL')
 
-if 'postgres:' in database_uri:
+if 'postgres:'in database_uri:
     database_uri = database_uri.replace("postgres:", "postgresql:")
 
 # print(database_uri)

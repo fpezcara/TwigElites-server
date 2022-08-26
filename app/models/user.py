@@ -7,4 +7,4 @@ class User(db.Model):
     username = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    reputation = db.Column(db.Integer)
+    reputation = db.Column(db.Integer, nullable=True)

@@ -13,6 +13,7 @@ pytest = "*"
 pytest-cov = "*"
 werkzeug = "*"
 flask-jwt-extended = "*"
+psycopg2 = "*"
 
 [dev-packages]
 colorama = "*"

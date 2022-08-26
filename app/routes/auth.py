@@ -4,13 +4,9 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
 
-main_routes = Blueprint("main", __name__)
+auth = Blueprint("auth", __name__)
 
-@main_routes.route('/')
-def welcome():
-    return "Twigelites Server!"
-
-@main_routes.route('/login', methods=['POST'])
+@auth.route('/auth/login', methods=['POST'])
 def login():
     username = request.json.get('username', None)
     email = request.json.get('email', None)
@@ -24,3 +20,6 @@ def login():
     return jsonify(access_token=access_token)
 
 
+@auth.route('/auth/register', methods=['POST'])
+def register():
+    pass

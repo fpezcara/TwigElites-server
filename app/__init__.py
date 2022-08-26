@@ -5,6 +5,8 @@ from flask_cors import CORS
 
 from .database.db import db
 from .routes.main import main_routes
+from flask_jwt_extended import JWTManager
+
 # from .routes.auth import auth_routes
 
 # Load environment variables
@@ -20,6 +22,8 @@ database_uri = environ.get('DATABASE_URL')
 # Set up the app
 
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = environ.get('JWT_SECRET')  # Change this!
+jwt = JWTManager(app)
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS=environ.get(

@@ -12,6 +12,7 @@ gunicorn = "*"
 pytest = "*"
 pytest-cov = "*"
 werkzeug = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 colorama = "*"

@@ -29,14 +29,23 @@ def login():
 @auth.route('/auth/register', methods=['POST'])
 def register():
     if request.method == "POST":
-        req = request.get_json()
-        username = req['username']
-        email = req['email']
-        password = req['password']
-        new_user = User(username=username, email=email, password=password)
+        try:
+            req = request.get_json()
+            username = req['username']
+            email = req['email']
+            password = req['password']
+            new_user = User(username=username, email=email, password=password)
 
-        db.session.add(new_user)
-        db.session.commit()
-      
-        return jsonify("New user was added!"), 201
+            existing_user = User.query.filter_by(username=username).first()
+            print(existing_user)
+
+            if existing_user:
+                raise Exception
+                
+
+            db.session.add(new_user)
+            db.session.commit()
+            return jsonify("New user was added!"), 201
+        except:
+            return f"Username: {username} already exists! Please, choose another username and try again!"
 

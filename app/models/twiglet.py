@@ -9,6 +9,6 @@ class Twiglet(db.Model):
     shop_name = db.Column(db.String)
     address = db.Column(db.String)
     found_by_user = db.Column(db.Integer, db.ForeignKey("user.user_id"))
-    date_found = db.Column(db.Date)
-    date_last_confirmed = db.Column(db.Date)
+    date_found = db.Column(db.String)
+    date_last_confirmed = db.Column(db.String)
 

@@ -6,6 +6,8 @@ from flask_cors import CORS
 from .database.db import db
 from .routes.main import main_routes
 from .routes.auth import auth
+from .routes.twiglet import twiglet
+
 
 from flask_jwt_extended import JWTManager
 
@@ -38,6 +40,8 @@ db.init_app(app)
 
 app.register_blueprint(main_routes)
 app.register_blueprint(auth)
+app.register_blueprint(twiglet)
+
 
 # app.register_blueprint(auth_routes, url_prefix='/auth')
 

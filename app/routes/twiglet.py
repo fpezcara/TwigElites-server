@@ -21,13 +21,12 @@ def get_all_twiglets():
     if request.method == "GET":
         try:
             all_twiglets = Twiglet.query.all()
-            response = jsonify([e.serialize() for e in all_twiglets])
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response
+            return all_twiglets, 200
+            # response = jsonify([e.serialize() for e in all_twiglets])
+            # response.headers.add('Access-Control-Allow-Origin', '*')
+            # print(all_twiglets)      
         except exceptions.NotFound:
-            raise exceptions.NotFound("User not found!")
-        except: 
-            raise exceptions.InternalServerError()
+            raise exceptions.NotFound("Twiglet not found!")
     elif request.method == "POST":
         req = request.get_json()
         longitude = req['longitude']

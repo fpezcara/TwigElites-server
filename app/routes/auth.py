@@ -16,6 +16,8 @@ def login():
         password = request.json.get('password', None)
 
         user = User.query.filter_by(username=username).first()
+        user_details = User.single_user(user)
+        print(User.single_user(user))
         if user == None:
             return jsonify({"msg": "Bad username or password"}), 401
       
@@ -23,7 +25,7 @@ def login():
         if user.password != password:
              raise exceptions.BadRequest("Wrong password!")
              
-        return jsonify(access_token=access_token), 200
+        return jsonify(access_token=access_token, user_details=user_details), 200
 
 
 @auth.route('/auth/register', methods=['POST'])

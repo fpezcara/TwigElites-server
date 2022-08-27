@@ -24,7 +24,8 @@ class Twiglet(db.Model):
             "date_last_confirmed": self.date_last_confirmed
         }
 
-    # def get_by_id(self):
+    # def return_by_id(self):
+    #     return {}
         
 
 # we need a get user route

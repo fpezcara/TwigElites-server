@@ -36,7 +36,7 @@ def get_all_twiglets():
         address = req['address']
         found_by_user = req['found_by_user']
         date_found = req['date_found']
-        date_last_confirmed = req['date_last_confirmed']
+        date_last_confirmed = req['date_found']
      
 
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()

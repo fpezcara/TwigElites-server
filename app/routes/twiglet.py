@@ -18,17 +18,17 @@ twiglet = Blueprint("twiglet", __name__)
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
 # gets all twiglets and adds a new one to our route
 def get_all_twiglets():
-    # if request.method == "GET":
-    #     try:
-    #         all_twiglets = Twiglet.query.all()
-    #         response = jsonify([e.serialize() for e in all_twiglets])
-    #         response.headers.add('Access-Control-Allow-Origin', '*')
-    #         return response
-    #     except exceptions.NotFound:
-    #         raise exceptions.NotFound("User not found!")
-    #     except: 
-    #         raise exceptions.InternalServerError()
-    if request.method == "POST":
+    if request.method == "GET":
+        try:
+            all_twiglets = Twiglet.query.all()
+            response = jsonify([e.serialize() for e in all_twiglets])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except exceptions.NotFound:
+            raise exceptions.NotFound("User not found!")
+        except: 
+            raise exceptions.InternalServerError()
+    elif request.method == "POST":
         req = request.get_json()
         longitude = req['longitude']
         latitude = req['latitude']

@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 # from flask_jwt_extended import jwt_required
 
 from ..database.db import db
-from ..models.twiglet import Twiglet
+from ..models.twiglet import Twiglet, User
 from werkzeug import exceptions
 
 

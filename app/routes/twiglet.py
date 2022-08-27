@@ -4,8 +4,9 @@ from flask import Blueprint, request, jsonify
 # from flask_jwt_extended import jwt_required
 
 from ..database.db import db
-from ..models.twiglet import Twiglet, User
+from ..models.twiglet import Twiglet
 from werkzeug import exceptions
+import datetime
 
 
 twiglet = Blueprint("twiglet", __name__)
@@ -27,6 +28,7 @@ def get_all_twiglets():
         except exceptions.NotFound:
             raise exceptions.NotFound("Twiglet not found!")
     elif request.method == "POST":
+        all_twiglets = Twiglet.query.all()
         req = request.get_json()
         longitude = req['longitude']
         latitude = req['latitude']
@@ -35,13 +37,20 @@ def get_all_twiglets():
         found_by_user = req['found_by_user']
         date_found = req['date_found']
         date_last_confirmed = req['date_last_confirmed']
+     
 
+        existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
+        print(existing_location)
+        if existing_location:
+            existing_location.date_last_confirmed = datetime.datetime.utcnow()
+            return jsonify("Tiglet was update!"), 201
         new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=found_by_user, date_found=date_found, date_last_confirmed=date_last_confirmed)       
 
         db.session.add(new_twiglet)
         db.session.commit()
 
         return jsonify("New twiglet was added!"), 201
+ 
   
 
   # Exception Handlers

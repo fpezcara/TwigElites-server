@@ -21,10 +21,9 @@ def get_all_twiglets():
     if request.method == "GET":
         try:
             all_twiglets = Twiglet.query.all()
-            return all_twiglets, 200
-            # response = jsonify([e.serialize() for e in all_twiglets])
-            # response.headers.add('Access-Control-Allow-Origin', '*')
-            # print(all_twiglets)      
+            response = jsonify([e.serialize() for e in all_twiglets]) 
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response      
         except exceptions.NotFound:
             raise exceptions.NotFound("Twiglet not found!")
     elif request.method == "POST":

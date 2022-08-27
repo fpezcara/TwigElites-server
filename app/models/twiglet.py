@@ -12,3 +12,14 @@ class Twiglet(db.Model):
     date_found = db.Column(db.String)
     date_last_confirmed = db.Column(db.String)
 
+    def serialize(self):
+        return {
+            "twiglet_id": self.twiglet_id,
+            "longitude": self.longitude,
+            "latitude": self.latitude,
+            "shop_name": self.shop_name,
+            "address": self.address,
+            "found_by_user": self.found_by_user,
+            "date_found": self.date_found,
+            "date_last_confirmed": self.date_last_confirmed
+        }

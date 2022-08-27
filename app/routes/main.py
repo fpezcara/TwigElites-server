@@ -8,7 +8,7 @@ main_routes = Blueprint("main", __name__)
 
 @main_routes.route('/')
 def welcome():
-    return "Twigelites Server!"
+    return "<h1>Twigelites Server!</h1>"
 
 
 

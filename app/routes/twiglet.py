@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 # from flask_jwt_extended import create_access_token
-# from flask_jwt_extended import get_jwt_identity
-# from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 from ..database.db import db
 from ..models.twiglet import Twiglet
@@ -17,8 +17,10 @@ twiglet = Blueprint("twiglet", __name__)
 #? 4. route to filter twiglets by location
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
+@jwt_required()
 # gets all twiglets and adds a new one to our route
 def get_all_twiglets():
+    # print(get_jwt_identity())
     if request.method == "GET":
         try:
             all_twiglets = Twiglet.query.all()

@@ -17,10 +17,10 @@ class User(db.Model):
             "id": self.user_id,
             "username": self.username,
             "email": self.email,
-            "password": self.password,
             "reputation": self.reputation,
             }
 
+   
     @property
     def password(self):
         raise AttributeError("Password is not a readable attribute!")

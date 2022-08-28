@@ -18,7 +18,7 @@ twiglet = Blueprint("twiglet", __name__)
 #? 4. route to filter twiglets by location
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
-@jwt_required()
+# @jwt_required()
 # gets all twiglets and adds a new one to our route
 def get_all_twiglets():
     # print(get_jwt_identity())
@@ -66,7 +66,7 @@ def get_twiglet_id(twiglet_id):
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
-            raise exceptions.NotFound("Twiglet not found!")
+            return jsonify("Twiglet not found!"), 201
         except:
             raise exceptions.InternalServerError()
 
@@ -74,7 +74,7 @@ def get_twiglet_id(twiglet_id):
     elif request.method == 'DELETE':
         try:
             delete_twiglet = Twiglet.query.get_or_404(twiglet_id)
-
+            print("delete twiglet")
             db.session.delete(delete_twiglet)
             db.session.commit()
             return "A twiglet was sucessfully deleted!", 204
@@ -85,7 +85,7 @@ def get_twiglet_id(twiglet_id):
             raise exceptions.InternalServerError()
             
 
-  # Exception Handlers
+# Exception Handlers
 
 @twiglet.errorhandler(exceptions.NotFound)
 def handle_404(err):

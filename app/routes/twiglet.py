@@ -42,6 +42,8 @@ def get_all_twiglets():
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
         if existing_location:
             existing_location.date_last_confirmed = datetime.datetime.utcnow()
+            db.session.add(existing_location)
+            db.session.commit()
             return jsonify("Tiglet was updated!"), 201
         new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=found_by_user, date_found=date_found, date_last_confirmed=date_last_confirmed)       
 

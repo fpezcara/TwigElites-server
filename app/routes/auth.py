@@ -36,7 +36,6 @@ def login():
                     "username": user.username
             }    
             if access_token:
-                print(user_details )
                 return jsonify(access_token=access_token, user_details=user_details), 200
            
         except:

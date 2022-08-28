@@ -1,8 +1,10 @@
 from urllib import response
 from flask import Blueprint, request, jsonify
 # from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
+# from flask_jwt_extended import (jwt_required, jwt_optional, get_jwt_identity)
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
+
 
 from ..database.db import db
 from ..models.twiglet import Twiglet
@@ -17,10 +19,9 @@ twiglet = Blueprint("twiglet", __name__)
 #? 2. add jwt_required() to post request but not get request
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
-# @jwt_required()
+@jwt_required(optional=True)
 # gets all twiglets and adds a new one to our route
 def get_all_twiglets():
-    # print(get_jwt_identity())
     if request.method == "GET":
         try:
             all_twiglets = Twiglet.query.all()
@@ -30,6 +31,8 @@ def get_all_twiglets():
         except exceptions.NotFound:
             raise exceptions.NotFound("Twiglet not found!")
     elif request.method == "POST":
+        user_identity = get_jwt_identity()
+        print("identity:", get_jwt_identity())
         all_twiglets = Twiglet.query.all()
         req = request.get_json()
         longitude = req['longitude']
@@ -40,7 +43,8 @@ def get_all_twiglets():
         date_found = req['date_found']
         date_last_confirmed = req['date_found']
      
-
+        if user_identity is None:
+            return "You're not authorised to add new twiglets. Create an account!"
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
         # from this to this 10 miles radius
         if existing_location:
@@ -70,7 +74,7 @@ def get_twiglet_id(twiglet_id):
         except:
             raise exceptions.InternalServerError()
 
-# Delete's a Twiglet by its id
+# Deletes a Twiglet by its id - NEED TO FIX MESSAGE TO SEND ONCE ITS DELETED!
     elif request.method == 'DELETE':
         try:
             delete_twiglet = Twiglet.query.get_or_404(twiglet_id)

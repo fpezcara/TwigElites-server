@@ -68,7 +68,7 @@ def get_twiglet_id(twiglet_id):
         except:
             raise exceptions.InternalServerError()
 
-# Deletes a Twiglet    
+# Deletes a Twiglet by its id 
     elif request.method == 'DELETE':
         try:
             delete_twiglet = Twiglet.query.get_or_404(twiglet_id)

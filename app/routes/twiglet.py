@@ -12,10 +12,9 @@ import datetime
 
 twiglet = Blueprint("twiglet", __name__)
 
-#? 1. add a new twiglet to our db
-#? 2. if twiglet location already exists, then update only "date_last_confirmed"
-#? 3. delete twiglet from db
-#? 4. route to filter twiglets by location
+
+#? 1. route to filter twiglets by location
+#? 2. add jwt_required() to post request but not get request
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
 # @jwt_required()
@@ -43,6 +42,7 @@ def get_all_twiglets():
      
 
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
+        # from this to this 10 miles radius
         if existing_location:
             existing_location.date_last_confirmed = datetime.datetime.utcnow()
             db.session.add(existing_location)
@@ -74,10 +74,11 @@ def get_twiglet_id(twiglet_id):
     elif request.method == 'DELETE':
         try:
             delete_twiglet = Twiglet.query.get_or_404(twiglet_id)
-            print("delete twiglet")
+            print(delete_twiglet)
             db.session.delete(delete_twiglet)
             db.session.commit()
-            return "A twiglet was sucessfully deleted!", 204
+
+            return "A twiglet was successfully deleted!", 200
         except exceptions.NotFound:
             # message appears when you search on postman - DELETE
             raise exceptions.NotFound("Twiglet not found!")

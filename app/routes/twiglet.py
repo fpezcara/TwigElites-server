@@ -1,3 +1,4 @@
+from urllib import response
 from flask import Blueprint, request, jsonify
 # from flask_jwt_extended import create_access_token
 # from flask_jwt_extended import get_jwt_identity
@@ -50,8 +51,36 @@ def get_all_twiglets():
         db.session.commit()
 
         return jsonify("New twiglet was added!"), 201
- 
-  
+
+
+@twiglet.route('/twiglets/<int:twiglet_id>/', methods=['GET', 'DELETE'])
+def get_twiglet_id(twiglet_id):
+# get a Twiglet by its id  
+    if request.method == 'GET':
+        try:
+            twig = Twiglet.query.get_or_404(twiglet_id)
+            response = jsonify([twig.serialize()]) 
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except exceptions.NotFound:
+            raise exceptions.NotFound("Twiglet not found!")
+        except:
+            raise exceptions.InternalServerError()
+
+# Deletes a Twiglet    
+    elif request.method == 'DELETE':
+        try:
+            delete_twiglet = Twiglet.query.get_or_404(twiglet_id)
+
+            db.session.delete(delete_twiglet)
+            db.session.commit()
+            return "A twiglet was sucessfully deleted!", 204
+        except exceptions.NotFound:
+            # message appears when you search on postman - DELETE
+            raise exceptions.NotFound("Twiglet not found!")
+        except:
+            raise exceptions.InternalServerError()
+            
 
   # Exception Handlers
 

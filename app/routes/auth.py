@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from ..database.db import db
 from ..models.user import User
 from werkzeug import exceptions
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 auth = Blueprint("auth", __name__)
@@ -12,20 +13,36 @@ auth = Blueprint("auth", __name__)
 @auth.route('/auth/login', methods=['POST'])
 def login():
     if request.method == "POST":
-        username = request.json.get('username', None)
-        password = request.json.get('password', None)
-
-        user = User.query.filter_by(username=username).first()
-        user_details = User.single_user(user)
-        print(User.single_user(user))
-        if user == None:
-            return jsonify({"msg": "Bad username or password"}), 401
+        try:
+            username = request.json.get('username', None)
+            password = request.json.get('password', None)
       
-        access_token = create_access_token(identity=username)
-        if user.password != password:
-             raise exceptions.BadRequest("Wrong password!")
-             
-        return jsonify(access_token=access_token, user_details=user_details), 200
+            user = User.query.filter_by(username=username).first()
+           
+            if user is None:
+                return jsonify({"msg": "Bad username or password"}), 401
+       
+        
+            authed = check_password_hash(user.password_hash, password) 
+            print("USER", authed)
+            if not authed:
+                # return exceptions.Unauthorized('Incorrect password.')
+                return "You've entered an incorrect password"
+
+         
+            access_token = create_access_token(identity=username)
+            user_details = {
+                    "id": user.user_id,
+                    "username": user.username
+            }    
+            if access_token:
+                return jsonify(access_token=access_token, user_details=user_details), 200
+           
+        except:
+            # raise exceptions.InternalServerError()
+            return "server error", 505
+    
+
 
 
 @auth.route('/auth/register', methods=['POST'])
@@ -36,18 +53,23 @@ def register():
             username = req['username']
             email = req['email']
             password = req['password']
-            new_user = User(username=username, email=email, password=password)
 
-            existing_user = User.query.filter_by(username=username).first()
-            print(existing_user)
+            user = User.query.filter_by(username=username).first()
 
-            if existing_user:
-                raise Exception
-                
+            if user:
+                return jsonify("Username already exists!"), 202
 
+            hashed_password = generate_password_hash(password)
+
+            new_user = User(username=username, email=email, password_hash=hashed_password)
             db.session.add(new_user)
             db.session.commit()
+         
             return jsonify("New user was added!"), 201
+            
+
         except:
-            return f"Username: {username} already exists! Please, choose another username and try again!"
+            raise exceptions.InternalServerError()
+
+
 

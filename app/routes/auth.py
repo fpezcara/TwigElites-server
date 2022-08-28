@@ -35,8 +35,12 @@ def login():
                     "id": user.user_id,
                     "username": user.username
             }    
+            token = {
+                 'success': True,
+                 'token': 'Bearer ' + access_token
+            }
             if access_token:
-                return jsonify(access_token=access_token, user_details=user_details), 200
+                return jsonify(access_token=token, user_details=user_details), 200
            
         except:
             # raise exceptions.InternalServerError()
@@ -71,5 +75,16 @@ def register():
         except:
             raise exceptions.InternalServerError()
 
+@auth.route('/auth/logout')
+def logout():
+    pass #! need to write logout route
+
+
+@auth.route('/auth/users')
+def get_all_users():
+    print("hi there")
+    users = User.query.all()
+    all_users = jsonify([u.single_user() for u in users])
+    return all_users
 
 

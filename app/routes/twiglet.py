@@ -40,8 +40,8 @@ def get_all_twiglets():
         shop_name = req['shop_name']
         address = req['address']
         found_by_user = req['found_by_user']
-        date_found = req['date_found']
-        date_last_confirmed = req['date_found']
+        # date_found = req['date_found']
+        # date_last_confirmed = req['date_found']
      
         if user_identity is None:
             return "You're not authorised to add new twiglets. Create an account!"
@@ -51,8 +51,8 @@ def get_all_twiglets():
             existing_location.date_last_confirmed = datetime.datetime.utcnow()
             db.session.add(existing_location)
             db.session.commit()
-            return jsonify("Tiglet was updated!"), 201
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=found_by_user, date_found=date_found, date_last_confirmed=date_last_confirmed)       
+            return jsonify("Twiglet was updated!"), 201
+        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=found_by_user, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())       
 
         db.session.add(new_twiglet)
         db.session.commit()

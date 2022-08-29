@@ -31,16 +31,13 @@ def login():
 
          
             access_token = create_access_token(identity=username)
-            user_details = {
-                    "id": user.user_id,
-                    "username": user.username
-            }    
+           
             token = {
                  'success': True,
-                 'token': 'Bearer ' + access_token
+                 'token': access_token
             }
             if access_token:
-                return jsonify(access_token=token, user_details=user_details), 200
+                return jsonify(access_token=token), 200
            
         except:
             # raise exceptions.InternalServerError()

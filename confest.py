@@ -1,14 +1,14 @@
+from app.models import User, Twiglet
 from app import app
-from app import User, Twiglet
-# import init_db
 import pytest
 
-# app = init_db()
+# app = create_app()
 
-# @pytest.fixture
+# @pytest.fixture()
 # def api():
 #     client = app.test_client()
 #     return client
+
 
 @pytest.fixture(scope='module')
 def new_user():

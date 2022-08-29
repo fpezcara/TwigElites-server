@@ -7,14 +7,10 @@ from .database.db import db
 from .routes.main import main_routes
 from .routes.auth import auth
 from .routes.twiglet import twiglet
-
-
 from flask_jwt_extended import JWTManager
 
-# from .routes.auth import auth_routes
 
 # Load environment variables
-
 load_dotenv()
 
 database_uri = environ.get('DATABASE_URL')
@@ -22,9 +18,8 @@ database_uri = environ.get('DATABASE_URL')
 if 'postgres:'in database_uri:
     database_uri = database_uri.replace("postgres:", "postgresql:")
 
-# print(database_uri)
-# Set up the app
 
+# Set up the app
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = environ.get('JWT_SECRET')  # Change this!
 jwt = JWTManager(app)
@@ -46,6 +41,5 @@ app.register_blueprint(twiglet)
 # app.register_blueprint(auth_routes, url_prefix='/auth')
 
 # Main
-
 if __name__ == "__main__":
     app.run(debug=True)

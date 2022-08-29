@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5bf2cee22a8f331000d4e4ef2bba058b492fe3be45dc307e5c8804f5f88060ec"
+            "sha256": "4eac5405c4d2e39814cfdf51b7e1d2329ea46310162e2e9b353637c48580d67f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -432,6 +432,13 @@
         }
     },
     "develop": {
+        "atomicwrites": {
+            "hashes": [
+                "sha256:81b2c9071a49367a7f770170e5eec8cb66567cfbbc8c73d20ce5ca4a8d71cf11"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==1.4.1"
+        },
         "autopep8": {
             "hashes": [
                 "sha256:6f09e90a2be784317e84dc1add17ebfc7abe3924239957a37e5040e27d812087",

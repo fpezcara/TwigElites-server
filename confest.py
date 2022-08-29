@@ -1,7 +1,8 @@
-from app.models import User, Twiglet
+from app import User, Twiglet
+import init_db
 import pytest
 
-app = None
+app = init_db()
 
 @pytest.fixture
 def api():

@@ -7,6 +7,7 @@ class Twiglet(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     shop_name = db.Column(db.String)
+    shop_id = db.Column(db.String)
     address = db.Column(db.String)
     found_by_user = db.Column(db.Integer, db.ForeignKey("user.user_id"))
     date_found = db.Column(db.String)

@@ -43,8 +43,8 @@ def get_all_twiglets():
         address = req['address']
       
         print(current_user.user_id)
-        if user_identity is None:
-            return "You're not authorised to add new twiglets. Create an account!"
+        # if user_identity is None:
+        #     return "You're not authorised to add new twiglets. Create an account!"
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
         # from this to this 10 miles radius
         if existing_location:

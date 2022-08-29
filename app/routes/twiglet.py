@@ -34,16 +34,18 @@ def get_all_twiglets():
             raise exceptions.NotFound("Twiglet not found!")
     elif request.method == "POST":
         user_identity = get_jwt_identity()
-        current_user = User.query.filter_by(username=user_identity).first()
+        # current_user = User.query.filter_by(username=user_identity).first()
         all_twiglets = Twiglet.query.all()
         req = request.get_json()
         longitude = req['longitude']
         latitude = req['latitude']
         shop_name = req['shop_name']
         address = req['address']
+        shop_id = req['shop_id']
+        
+        # !FAKE USER BEING USER, NEED TO COMMENT OUT LINE 37 current_user LATER ON TO GET THIS WORKING
       
-        print(current_user.user_id)
-        # if user_identity is None:
+           # if user_identity is None:
         #     return "You're not authorised to add new twiglets. Create an account!"
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
         # from this to this 10 miles radius
@@ -52,7 +54,8 @@ def get_all_twiglets():
             db.session.add(existing_location)
             db.session.commit()
             return jsonify("Twiglet was updated!"), 201
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())       
+        # new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())  
+        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=1, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
 
         db.session.add(new_twiglet)
         db.session.commit()

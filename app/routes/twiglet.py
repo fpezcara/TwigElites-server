@@ -95,21 +95,12 @@ def get_twiglet_id(twiglet_id):
     elif request.method == 'PATCH':
         try:
 
-            # twiglet = Twiglet.query.filter_by(twiglet_id=twiglet_id)
-            # upvote = twiglet.votes + 1
-            # twiglet.votes = upvote
-            # db.session.add(twiglet.votes)
-            # # votes = twiglet.votes + 1
-            # print("UPVOTEESSSS", twiglet.votes)
-            # print("twiglet", twiglet.votes + 1)
-            # print(twiglet)
             twiglet = Twiglet.query.get_or_404(twiglet_id)
             twiglet.votes = twiglet.votes + 1
             db.session.add(twiglet)
-            print("with nromal",Twiglet.query.filter_by(twiglet_id=twiglet_id).first().votes)
             db.session.commit()
          
-            return "Twiglet's upvote added!"
+            return "Twiglet's vote added!"
         except:   
             raise exceptions.InternalServerError()
             

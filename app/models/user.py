@@ -10,6 +10,12 @@ class User(db.Model):
     password_hash = db.Column(db.String(180), nullable=False)
     reputation = db.Column(db.Integer, nullable=True)
 
+    def __init__(self, username, email, password_hash, reputation):
+        self.username = username
+        self.email = email
+        self.password_hash = password_hash
+        self.reputation = reputation
+
     def single_user(self):
         if self is None:
             return "User doesn't exist!"

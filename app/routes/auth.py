@@ -79,7 +79,6 @@ def logout():
 
 @auth.route('/auth/users')
 def get_all_users():
-    print("hi there")
     users = User.query.all()
     all_users = jsonify([u.single_user() for u in users])
     return all_users

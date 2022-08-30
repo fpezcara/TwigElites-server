@@ -42,7 +42,8 @@ def get_all_twiglets():
         shop_name = req['shop_name']
         address = req['address']
         shop_id = req['shop_id']
-        
+        # shirt = 'white' if game_type == 'home' else 'green'
+
         # !FAKE USER BEING USER, NEED TO COMMENT OUT LINE 37 current_user LATER ON TO GET THIS WORKING
       
            # if user_identity is None:
@@ -55,7 +56,7 @@ def get_all_twiglets():
             db.session.commit()
             return jsonify("Twiglet was updated!"), 201
         # new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())  
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=1, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
+        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, address=address, shop_name=shop_name, found_by_user=1, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
 
         db.session.add(new_twiglet)
         db.session.commit()
@@ -63,7 +64,7 @@ def get_all_twiglets():
         return jsonify("New twiglet was added!"), 201
 
 
-@twiglet.route('/twiglets/<int:twiglet_id>/', methods=['GET', 'DELETE'])
+@twiglet.route('/twiglets/<int:twiglet_id>/', methods=['GET', 'DELETE', 'PATCH'])
 def get_twiglet_id(twiglet_id):
 # get a Twiglet by its id  
     if request.method == 'GET':
@@ -81,7 +82,6 @@ def get_twiglet_id(twiglet_id):
     elif request.method == 'DELETE':
         try:
             delete_twiglet = Twiglet.query.get_or_404(twiglet_id)
-            print(delete_twiglet)
             db.session.delete(delete_twiglet)
             db.session.commit()
 
@@ -90,6 +90,27 @@ def get_twiglet_id(twiglet_id):
             # message appears when you search on postman - DELETE
             raise exceptions.NotFound("Twiglet not found!")
         except:
+            raise exceptions.InternalServerError()
+    
+    elif request.method == 'PATCH':
+        try:
+
+            # twiglet = Twiglet.query.filter_by(twiglet_id=twiglet_id)
+            # upvote = twiglet.votes + 1
+            # twiglet.votes = upvote
+            # db.session.add(twiglet.votes)
+            # # votes = twiglet.votes + 1
+            # print("UPVOTEESSSS", twiglet.votes)
+            # print("twiglet", twiglet.votes + 1)
+            # print(twiglet)
+            twiglet = Twiglet.query.get_or_404(twiglet_id)
+            twiglet.votes = twiglet.votes + 1
+            db.session.add(twiglet)
+            print("with nromal",Twiglet.query.filter_by(twiglet_id=twiglet_id).first().votes)
+            db.session.commit()
+         
+            return "Twiglet's upvote added!"
+        except:   
             raise exceptions.InternalServerError()
             
 

@@ -8,7 +8,6 @@ from werkzeug import exceptions
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 auth = Blueprint("auth", __name__)
 
 @auth.route('/auth/login', methods=['POST'])
@@ -42,10 +41,7 @@ def login():
            
         except:
             # raise exceptions.InternalServerError()
-            return "server error", 505
-    
-
-
+            return "server error", 505 
 
 @auth.route('/auth/register', methods=['POST'])
 def register():
@@ -73,10 +69,9 @@ def register():
         except:
             raise exceptions.InternalServerError()
 
-@auth.route('/auth/logout')
-def logout():
-    pass #! need to write logout route
-
+# @auth.route('/auth/logout')
+# def logout():
+#     pass #! need to write logout route
 
 @auth.route('/auth/users')
 def get_all_users():

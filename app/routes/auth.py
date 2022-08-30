@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_login import logout_user
+# from flask_login import logout_user
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from ..database.db import db
@@ -44,10 +44,10 @@ def login():
             return "server error", 505
     
 
-@auth.route("/auth/logout")
-def logout():
-    logout_user()
-    return jsonify("User has been successfully logged out!"), 201
+# @auth.route("/auth/logout", method=['POST'])
+# def logout():
+#     if request.method == 'POST':
+#         return jsonify("User has been successfully logged out!"), 201
 
 @auth.route('/auth/register', methods=['POST'])
 def register():

@@ -39,5 +39,4 @@ class Twiglet(db.Model):
             "date_last_confirmed": self.date_last_confirmed
         }
 
-
 # we need a get user route

@@ -1,1 +1,1 @@
-web: pipenv run start
+web: gunicorn -k eventlet app:app

@@ -6,6 +6,7 @@ def start_socket(socketio):
 
     @socketio.on('connect')
     def connect():
+        print(request.values['id'])
         join_room(request.values['id'])
         print("****CONNECTED!*****")
 
@@ -24,4 +25,5 @@ def start_socket(socketio):
             json_data = {
                     "recipients": new_recipients, "sender": request.values['id'], "text":text
                 }
+            print(json_data)
             emit("receive-message", json_data, room=recipient)

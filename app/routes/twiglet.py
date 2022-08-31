@@ -74,7 +74,7 @@ def get_twiglet_id(twiglet_id):
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
         except exceptions.NotFound:
-            return jsonify("Twiglet not found!"), 201
+            return jsonify("Twiglet not found!"), 200
         except:
             raise exceptions.InternalServerError()
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
+# from flask_login import logout_user
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from ..database.db import db
 from ..models.user import User
 from werkzeug import exceptions
@@ -41,7 +41,12 @@ def login():
            
         except:
             # raise exceptions.InternalServerError()
+
             return "server error", 505 
+
+      
+    
+
 
 @auth.route('/auth/register', methods=['POST'])
 def register():
@@ -69,15 +74,9 @@ def register():
         except:
             raise exceptions.InternalServerError()
 
-# @auth.route('/auth/logout')
-# def logout():
-#     pass #! need to write logout route
 
 @auth.route('/auth/users')
 def get_all_users():
-    print("hi there")
     users = User.query.all()
     all_users = jsonify([u.single_user() for u in users])
     return all_users
-
-

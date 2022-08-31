@@ -41,13 +41,12 @@ def login():
            
         except:
             # raise exceptions.InternalServerError()
-            return "server error", 505
+
+            return "server error", 505 
+
+      
     
 
-# @auth.route("/auth/logout", method=['POST'])
-# def logout():
-#     if request.method == 'POST':
-#         return jsonify("User has been successfully logged out!"), 201
 
 @auth.route('/auth/register', methods=['POST'])
 def register():

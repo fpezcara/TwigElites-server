@@ -1,3 +1,4 @@
+from app import create_app
 from app.models.twiglet import Twiglet
 from app.models.user import User
 
@@ -13,6 +14,11 @@ def test_new_user_with_fixture():
     assert user.password_hash == 'password'
     assert user.reputation == 'null'
     
+# def test_new_user_with_fixture_again():
+#     flask_app = create_app()
+
+
+
 def test_new_twiglet_with_fixtures():
     """
     Given a Twiglet Model

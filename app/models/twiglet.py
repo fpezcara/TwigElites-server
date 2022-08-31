@@ -11,6 +11,7 @@ class Twiglet(db.Model):
     shop_id = db.Column(db.String)
     address = db.Column(db.String)
     found_by_user = db.Column(db.Integer, db.ForeignKey("user.user_id"))
+    votes = db.Column(db.Integer, default=0)
     date_found = db.Column(db.String)
     date_last_confirmed = db.Column(db.String)
 
@@ -33,12 +34,9 @@ class Twiglet(db.Model):
             "shop_id": self.shop_id,
             "address": self.address,
             "found_by_user": self.found_by_user,
+            "votes": self.votes,
             "date_found": self.date_found,
             "date_last_confirmed": self.date_last_confirmed
         }
-
-    # def return_by_id(self):
-    #     return {}
-
 
 # we need a get user route

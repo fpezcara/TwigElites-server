@@ -7,7 +7,6 @@ def start_socket(socketio):
     @socketio.on('connect')
     def connect():
         join_room(request.values['id'])
-        print((request.values['id']))
         print("****CONNECTED!*****")
 
     @socketio.on('disconnect')

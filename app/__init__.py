@@ -39,8 +39,8 @@ db.init_app(app)
 
 # Socket io
 socketio = SocketIO(app, cors_allowed_origins='*')
-start_socket(socketio)
 
+start_socket(socketio)
 
 app.register_blueprint(main_routes)
 app.register_blueprint(auth)

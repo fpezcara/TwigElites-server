@@ -16,6 +16,7 @@ flask-jwt-extended = "*"
 psycopg2 = "*"
 flask-login = "*"
 python-dateutil = "*"
+flask-socketio = "*"
 
 [dev-packages]
 colorama = "*"

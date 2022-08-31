@@ -2,8 +2,6 @@ from urllib import response
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
-from dateutil.parser import *
-from dateutil.tz import *
 
 from ..database.db import db
 from ..models.twiglet import Twiglet
@@ -14,10 +12,6 @@ import datetime
 
 
 twiglet = Blueprint("twiglet", __name__)
-
-def number_of_days(date_1, date_2):  
-    calculation = (date_1 - date_2).days
-    return f"Last updated {calculation} days ago"
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
 @jwt_required(optional=True)

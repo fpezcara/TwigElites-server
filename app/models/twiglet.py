@@ -30,7 +30,7 @@ class Twiglet(db.Model):
 
 def number_of_days(date_1, date_2):  
     calculation = (date_1 - date_2).days
-    return f"Last updated {calculation} days ago"
+    return f"{calculation} days ago"
 
 
 # we need a get user route

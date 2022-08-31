@@ -56,7 +56,7 @@ def get_all_twiglets():
             db.session.commit()
             return jsonify("Twiglet was updated!"), 201
         # new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())  
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, address=address, shop_name=shop_name, found_by_user=1, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
+        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, address=address, shop_name=shop_name, found_by_user=2, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
 
         db.session.add(new_twiglet)
         db.session.commit()
@@ -104,6 +104,13 @@ def get_twiglet_id(twiglet_id):
         except:   
             raise exceptions.InternalServerError()
             
+
+@twiglet.route('/twiglets/user/<int:user_id>', methods=['GET'])
+def get_twiglet_by_user(user_id):
+    if request.method == 'GET':
+        twig = Twiglet.query.filter_by(found_by_user=user_id)
+        print(twig)
+        return "hi"
 
 # Exception Handlers
 

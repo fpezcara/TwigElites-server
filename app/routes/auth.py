@@ -41,7 +41,10 @@ def login():
            
         except:
             # raise exceptions.InternalServerError()
+
             return "server error", 505 
+
+
 
 
 @auth.route('/auth/register', methods=['POST'])

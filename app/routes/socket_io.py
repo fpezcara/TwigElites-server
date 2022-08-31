@@ -19,9 +19,12 @@ def start_socket(socketio):
         text = data['text']
 
         for recipient in recipients:
+            print(recipient)
             new_recipients = [r for r in recipients if r!= recipient]
+            (type(recipient) == "string")
             new_recipients.append(request.values['id'])
             json_data = {
                     "recipients": new_recipients, "sender": request.values['id'], "text":text
                 }
+            print(json_data)
             emit("receive-message", json_data, room=recipient)

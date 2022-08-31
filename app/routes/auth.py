@@ -46,7 +46,7 @@ def login():
 
 
 
-@auth.route('/auth/register', methods=['POST'])
+@auth.route('/auth/register/', methods=['POST'])
 def register():
     if request.method == "POST":
         try:
@@ -55,15 +55,14 @@ def register():
             email = req['email']
             password = req['password']
             user = User.query.filter_by(username=username).first()
-
+            print(user)
+            hashed_password = generate_password_hash(password)
+            
+            print(hashed_password)
             if user:
                 return jsonify("Username already exists!"), 202
 
-            hashed_password = generate_password_hash(password)
-
-            
             new_user = User(username=username, email=email, password_hash=hashed_password)
-            print("******", new_user)
 
             db.session.add(new_user)
             db.session.commit()

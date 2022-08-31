@@ -11,8 +11,8 @@ class Twiglet(db.Model):
     address = db.Column(db.String)
     found_by_user = db.Column(db.Integer, db.ForeignKey("user.user_id"))
     votes = db.Column(db.Integer, default=0)
-    date_found = db.Column(db.String)
-    date_last_confirmed = db.Column(db.String)
+    date_found = db.Column(db.Date)
+    date_last_confirmed = db.Column(db.Date)
 
     def serialize(self):
         return {
@@ -24,9 +24,13 @@ class Twiglet(db.Model):
             "address": self.address,
             "found_by_user": self.found_by_user,
             "votes": self.votes,
-            "date_found": self.date_found,
-            "date_last_confirmed": self.date_last_confirmed
+            "date_found": number_of_days(self.date_found, datetime.date.today()),
+            "date_last_confirmed": number_of_days(self.date_last_confirmed, datetime.date.today())
         }
 
-  
+def number_of_days(date_1, date_2):  
+    calculation = (date_1 - date_2).days
+    return f"Last updated {calculation} days ago"
+
+
 # we need a get user route

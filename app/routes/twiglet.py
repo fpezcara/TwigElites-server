@@ -1,10 +1,9 @@
 from urllib import response
 from flask import Blueprint, request, jsonify
-# from flask_jwt_extended import create_access_token
-# from flask_jwt_extended import (jwt_required, jwt_optional, get_jwt_identity)
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
-
+from dateutil.parser import *
+from dateutil.tz import *
 
 from ..database.db import db
 from ..models.twiglet import Twiglet
@@ -16,9 +15,9 @@ import datetime
 
 twiglet = Blueprint("twiglet", __name__)
 
-
-#? 1. route to filter twiglets by location
-#? 2. add jwt_required() to post request but not get request
+def number_of_days(date_1, date_2):  
+    calculation = (date_1 - date_2).days
+    return f"Last updated {calculation} days ago"
 
 @twiglet.route('/twiglets', methods=['GET', 'POST'])
 @jwt_required(optional=True)
@@ -51,12 +50,12 @@ def get_all_twiglets():
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
         # from this to this 10 miles radius
         if existing_location:
-            existing_location.date_last_confirmed = datetime.datetime.utcnow()
+            existing_location.date_last_confirmed = datetime.date.today()
             db.session.add(existing_location)
             db.session.commit()
             return jsonify("Twiglet was updated!"), 201
         # new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow())  
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, address=address, shop_name=shop_name, found_by_user=2, date_found=datetime.datetime.utcnow(), date_last_confirmed=datetime.datetime.utcnow(), shop_id=shop_id)       
+        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, address=address, shop_name=shop_name, found_by_user=2, date_found=datetime.date.today(), date_last_confirmed=datetime.date.today(), shop_id=shop_id)       
 
         db.session.add(new_twiglet)
         db.session.commit()
@@ -66,6 +65,7 @@ def get_all_twiglets():
 
 @twiglet.route('/twiglets/<int:twiglet_id>/', methods=['GET', 'DELETE', 'PATCH'])
 def get_twiglet_id(twiglet_id):
+
 # get a Twiglet by its id  
     if request.method == 'GET':
         try:

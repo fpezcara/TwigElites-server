@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
-from flask import Flask, render_template, request
+from flask import Flask
 from flask_cors import CORS
 
 from .database.db import db
@@ -22,7 +22,7 @@ if 'postgres:'in database_uri:
 # Set up the app
 
 app = Flask(__name__)
-app.config["JWT_SECRET_KEY"] = environ.get('JWT_SECRET')  # Change this!
+app.config["JWT_SECRET_KEY"] = environ.get('JWT_SECRET')
 jwt = JWTManager(app)
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,

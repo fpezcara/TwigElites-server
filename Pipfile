@@ -14,6 +14,8 @@ pytest-cov = "*"
 werkzeug = "*"
 flask-jwt-extended = "*"
 psycopg2 = "*"
+flask-login = "*"
+python-dateutil = "*"
 
 [dev-packages]
 colorama = "*"

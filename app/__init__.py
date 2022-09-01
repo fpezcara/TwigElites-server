@@ -38,19 +38,19 @@ db.app = app
 db.init_app(app)
 
 # Socket io
-socketio = SocketIO(app, cors_allowed_origins='*')
-
-start_socket(socketio)
 
 app.register_blueprint(main_routes)
 app.register_blueprint(auth)
 app.register_blueprint(twiglet)
 
 
+socketio = SocketIO(app, cors_allowed_origins='*')
+
+start_socket(socketio)
 # app.register_blueprint(auth_routes, url_prefix='/auth')
 
 # Main
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app)
 

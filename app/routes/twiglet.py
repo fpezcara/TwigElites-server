@@ -38,13 +38,21 @@ def get_all_twiglets():
         if user_identity is None:
             return jsonify("You're not authorised to add new twiglets. Create an account!"), 401
         existing_location = Twiglet.query.filter_by(latitude=latitude, longitude=longitude).first()
-        # from this to this 10 miles radius
         if existing_location:
             existing_location.date_last_confirmed = datetime.date.today()
             db.session.add(existing_location)
             db.session.commit()
             return jsonify("Twiglet was updated!"), 201
-        new_twiglet = Twiglet(longitude=longitude, latitude=latitude, shop_name=shop_name, address=address, found_by_user=current_user.user_id, date_found=datetime.date.utcnow(), date_last_confirmed=datetime.date.utcnow())  
+            
+        new_twiglet = Twiglet(
+        longitude=longitude, 
+        latitude=latitude, 
+        shop_name=shop_name, 
+        shop_id=shop_id,
+        address=address, 
+        found_by_user=current_user.user_id, 
+        date_found=datetime.date.today(), 
+        date_last_confirmed=datetime.date.today())  
   
         db.session.add(new_twiglet)
         db.session.commit()

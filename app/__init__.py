@@ -9,7 +9,6 @@ from .routes.main import main_routes
 from .routes.auth import auth
 from .routes.twiglet import twiglet
 from flask_jwt_extended import JWTManager
-from .routes.socket_io import start_socket
 
 
 
@@ -44,14 +43,10 @@ app.register_blueprint(auth)
 app.register_blueprint(twiglet)
 
 
-socketio = SocketIO(app, cors_allowed_origins='*')
-
-start_socket(socketio)
 # app.register_blueprint(auth_routes, url_prefix='/auth')
 
 # Main
 
 if __name__ == "__main__":
-    # app.run(debug=True)
-    socketio.run(app)
+    app.run(debug=True)
 

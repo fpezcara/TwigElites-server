@@ -101,13 +101,19 @@ def get_twiglet_id(twiglet_id):
 
 @twiglet.route('/twiglets/user/<int:user_id>', methods=['GET'])
 def get_twiglet_by_user(user_id):
-    try:
-        if request.method == 'GET':
+    if request.method == 'GET':
+        try:
             twig = Twiglet.query.filter_by(found_by_user=user_id).all()
             print(twig)
-            return twig
-    except:
-        raise exceptions.InternalServerError()
+            # response = jsonify([twig.serialize()])
+            response = jsonify([t.serialize() for t in twig])
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except exceptions.NotFound:
+            return jsonify("User's twiglet not found!")
+        except:
+            raise exceptions.InternalServerError()
+  
 
 # Exception Handlers
 

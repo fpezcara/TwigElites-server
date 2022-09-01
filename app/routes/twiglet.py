@@ -101,10 +101,13 @@ def get_twiglet_id(twiglet_id):
 
 @twiglet.route('/twiglets/user/<int:user_id>', methods=['GET'])
 def get_twiglet_by_user(user_id):
-    if request.method == 'GET':
-        twig = Twiglet.query.filter_by(found_by_user=user_id).all()
-        print(twig)
-        return twig
+    try:
+        if request.method == 'GET':
+            twig = Twiglet.query.filter_by(found_by_user=user_id).all()
+            print(twig)
+            return twig
+    except:
+        raise exceptions.InternalServerError()
 
 # Exception Handlers
 

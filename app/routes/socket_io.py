@@ -26,6 +26,7 @@ def start_socket(socketio):
         recipients = data['recipients']
         text = data['text']
         print("RECIII", recipients)
+        print("DATA", data)
         for recipient in recipients:
             print("RECIPIENTs", recipients)
             new_recipients = [r for r in recipients if r!= recipient]
@@ -35,5 +36,4 @@ def start_socket(socketio):
             json_data = {
                     "recipients": new_recipients, "sender": request.values['id'], "text":text
                 }
-            print(json_data)
             emit("receive-message", json_data, to=recipient)

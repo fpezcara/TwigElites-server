@@ -29,7 +29,7 @@ class Twiglet(db.Model):
         }
 
 def number_of_days(date_1, date_2):  
-    calculation = (date_1 - date_2).days
+    calculation = (date_1 + date_2).days
     return f"{calculation}"
 
 

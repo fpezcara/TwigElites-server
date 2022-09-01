@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 from os import environ
 from flask import Flask, request
 from flask_cors import CORS
-from flask_socketio import SocketIO
 
 from .database.db import db
 from .routes.main import main_routes

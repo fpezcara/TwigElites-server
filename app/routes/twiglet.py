@@ -91,8 +91,8 @@ def get_twiglet_id(twiglet_id):
     
     elif request.method == 'PATCH':
         try:
-
             twiglet = Twiglet.query.get_or_404(twiglet_id)
+            print(twiglet)
             twiglet.votes = twiglet.votes + 1
             db.session.add(twiglet)
             db.session.commit()

@@ -25,7 +25,7 @@ class Twiglet(db.Model):
             "found_by_user": self.found_by_user,
             "votes": self.votes,
             "date_found": number_of_days(datetime.date.today(), self.date_found),
-            "date_last_confirmed": number_of_days(self.date_last_confirmed, datetime.date.today())
+            "date_last_confirmed": number_of_days(datetime.date.today(), self.date_last_confirmed)
         }
 
 def number_of_days(date_1, date_2):  

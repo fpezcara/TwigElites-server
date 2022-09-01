@@ -35,7 +35,8 @@ def login():
             token = {
                  'success': True,
                  'token': access_token,
-                 'username': user.username
+                 'username': user.username,
+                 'user_id': user.user_id
             }
             if access_token:
                 return jsonify(access_token=token), 200

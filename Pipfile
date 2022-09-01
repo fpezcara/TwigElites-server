@@ -17,8 +17,6 @@ psycopg2 = "*"
 flask-login = "*"
 python-dateutil = "*"
 flask-socketio = "*"
-eventlet = "*"
-gevent-websocket = "*"
 
 [dev-packages]
 colorama = "*"
